@@ -4,7 +4,7 @@ const {
   getBookByIdHandler,
   editBookByIdHandler,
   deleteBookByIdHandler
-} = require('./handler')
+} = require('./handler');
 
 const routes = [
   {
@@ -37,6 +37,6 @@ const routes = [
     path: '/',
     handler: getAllBooksHandler
   }
-]
+];
 
-module.exports = routes
+module.exports = routes;

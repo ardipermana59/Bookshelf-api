@@ -1,36 +1,34 @@
 const Hapi = require('@hapi/hapi')
 const routes = require('./routes')
 
-// Konfigurasi server
 const config = {
   port: 9000,
   host: 'localhost'
-}
+};
 
-// Fungsi untuk menjalankan server
-const init = async (c) => {
-  // Membuat instance server Hapi
-  const server = Hapi.server({
-    port: c.port,
-    host: c.host,
-    // Konfigurasi CORS
-    routes: {
-      cors: {
-        origin: ['*']
+const init = async (config) => {
+  try {
+    const server = Hapi.server({
+      port: config.port,
+      host: config.host,
+      routes: {
+        cors: {
+          origin: ['*'] 
+        }
       }
-    }
-  })
+    });
 
-  // Menambahkan rute dari file routes.js
-  server.route(routes)
+    server.route(routes);
 
-  // Menjalankan server
-  await server.start()
-  // Development
-  console.log(`Server running on ${server.info.uri}`)
+    await server.start();
+    console.log(`Server running on ${server.info.uri}`);
+    
+    return server;
+  } catch (error) {
+    console.error('Error starting server:', error);
+    // eslint-disable-next-line no-undef
+    process.exit(1);
+  }
+};
 
-  return server
-}
-
-// Menjalankan server dengan konfigurasi yang sudah ditentukan
-init(config)
+init(config);
